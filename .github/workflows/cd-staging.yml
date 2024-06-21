@@ -25,7 +25,7 @@ jobs:
                 username: ${{ secrets.SSH_USER_NAME_STAGING}}
                 key: ${{ secrets.SSH_PRIVATE_KEY_STAGING}}
                 envs: APP_STG_PORT, MINIO_STG_ENDPOINT,MINIO_STG_ACCESS_KEY, MINIO_STG_SECRET_KEY, APP_STG_PATH
-                script:
+                script: |
 
                     if [[ -d "${APP_STG_PATH}" ]]; then 
                         cd $APP_STG_PATH
