@@ -48,7 +48,3 @@ jobs:
               run: |
                 sleep 10
                 curl ${{ secrets.STG_URL}}
-				
-				
-				
-			
