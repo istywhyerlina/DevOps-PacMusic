@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./app
-          file: ./app/templates/Dockerfile
+          file: ./app/Dockerfile
           push: true
           tags: | 
             ${{ secrets.DOCKERHUB_USERNAME }}/pacmusic:${{ github.ref_name }}
