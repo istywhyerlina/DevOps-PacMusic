@@ -52,7 +52,3 @@ jobs:
               run: |
                 sleep 10
                 curl ${{ secrets.PROD_URL}}
-				
-				
-				
-			
