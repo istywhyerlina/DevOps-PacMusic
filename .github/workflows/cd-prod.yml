@@ -18,7 +18,7 @@ jobs:
                 MINIO_PROD_ACCESS_KEY: ${{ secrets.MINIO_PROD_ACCESS_KEY}}
                 MINIO_PROD_SECRET_KEY: ${{ secrets.MINIO_PROD_SECRET_KEY}}
                 APP_PROD_PATH: ${{ vars.APP_PROD_PATH}}
-                APP_TAG: ${{ github.event.release.tag_name }}
+                APP_TAG: latest
                 DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
                 APP_NAME: pacmusic
             
