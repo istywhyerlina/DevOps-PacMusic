@@ -3,7 +3,7 @@ name: Deploy Production 🚀
 on:
   release:
     types:
-      [created, published, edited]
+      [published, edited]
 
 jobs:
     deploy-production:
