@@ -20,14 +20,17 @@ jobs:
                 APP_PROD_PATH: ${{ vars.APP_PROD_PATH}}
                 APP_TAG: ${{ github.event.release.tag_name}}
                 DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME}}
+                DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN}}
                 APP_NAME: pacmusic
             
               with:
                 host: ${{ secrets.SSH_HOST_PRODUCTION}}
                 username: ${{ secrets.SSH_USER_NAME_PRODUCTION}}
                 key: ${{ secrets.SSH_PRIVATE_KEY_PRODUCTION}}
-                envs: APP_PROD_PORT, MINIO_PROD_ENDPOINT,MINIO_PROD_ACCESS_KEY, MINIO_PROD_SECRET_KEY, APP_PROD_PATH, APP_TAG, APP_NAME, DOCKERHUB_USERNAME
+                envs: APP_PROD_PORT, MINIO_PROD_ENDPOINT,MINIO_PROD_ACCESS_KEY, MINIO_PROD_SECRET_KEY, APP_PROD_PATH, APP_TAG, APP_NAME, DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
                 script: |
+                    
+                    sudo docker login -u  $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
 
                     if [[ -d "${APP_PROD_PATH}" ]]; then 
                         cd $APP_PROD_PATH
