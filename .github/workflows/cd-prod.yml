@@ -13,7 +13,8 @@ jobs:
             - name: Execute deployment command
               uses: appleboy/ssh-action@v1.0.3
               env:
-                APP_PROD_PORT: ${{ secrets.APP_PROD_PORT}}
+                APP_PROD_PORT_1: ${{ secrets.APP_PROD_PORT_1}}
+                APP_PROD_PORT_2: ${{ secrets.APP_PROD_PORT_2}}
                 MINIO_PROD_ENDPOINT: ${{ secrets.MINIO_PROD_ENDPOINT}}
                 MINIO_PROD_ACCESS_KEY: ${{ secrets.MINIO_PROD_ACCESS_KEY}}
                 MINIO_PROD_SECRET_KEY: ${{ secrets.MINIO_PROD_SECRET_KEY}}
@@ -27,14 +28,15 @@ jobs:
                 host: ${{ secrets.SSH_HOST_PRODUCTION}}
                 username: ${{ secrets.SSH_USER_NAME_PRODUCTION}}
                 key: ${{ secrets.SSH_PRIVATE_KEY_PRODUCTION}}
-                envs: APP_PROD_PORT, MINIO_PROD_ENDPOINT,MINIO_PROD_ACCESS_KEY, MINIO_PROD_SECRET_KEY, APP_PROD_PATH, APP_TAG, APP_NAME, DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
+                envs: APP_PROD_PORT_1, APP_PROD_PORT_2, MINIO_PROD_ENDPOINT,MINIO_PROD_ACCESS_KEY, MINIO_PROD_SECRET_KEY, APP_PROD_PATH, APP_TAG, APP_NAME, DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
                 script: |
                     
                     sudo docker login -u  $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
 
                     if [[ -d "${APP_PROD_PATH}" ]]; then 
                         cd $APP_PROD_PATH
-                        sudo docker compose down pacmusic-prod
+                        sudo docker compose down pacmusic-prod-1
+                        sudo docker compose down pacmusic-prod-2
                         git pull origin main
                     else
                         ssh-keyscan github.com > ~/.ssh/known_hosts
@@ -44,12 +46,15 @@ jobs:
 
                     echo "APP_IMAGE=${DOCKERHUB_USERNAME}/${APP_NAME}" > .env
                     echo "APP_TAG=$APP_TAG" >> .env
-                    echo "APP_PROD_PORT=$APP_PROD_PORT" >> .env
+                    echo "APP_PROD_PORT_1=$APP_PROD_PORT_1" >> .env
+                    echo "APP_PROD_PORT_2=$APP_PROD_PORT_2" >> .env
                     echo "MINIO_PROD_ENDPOINT=$MINIO_PROD_ENDPOINT" >> .env
                     echo "MINIO_PROD_ACCESS_KEY=$MINIO_PROD_ACCESS_KEY" >> .env
                     echo "MINIO_PROD_SECRET_KEY=$MINIO_PROD_SECRET_KEY" >> .env
                     
-                    sudo docker compose up --build --detach pacmusic-prod
+                    sudo docker compose up --build --detach pacmusic-prod-1
+                    sudo docker compose up --build --detach pacmusic-prod-2
+
 
             - name: Hit Endpoint
               run: |
