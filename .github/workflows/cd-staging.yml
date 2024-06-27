@@ -20,12 +20,13 @@ jobs:
                 MINIO_STG_ACCESS_KEY: ${{ secrets.MINIO_STG_ACCESS_KEY}}
                 MINIO_STG_SECRET_KEY: ${{ secrets.MINIO_STG_SECRET_KEY}}
                 APP_STG_PATH: ${{ vars.APP_STG_PATH}}
+                GIT_URL: ${{ secrets.GIT_URL}}
 
               with:
                 host: ${{ secrets.SSH_HOST_STAGING}}
                 username: ${{ secrets.SSH_USER_NAME_STAGING}}
                 key: ${{ secrets.SSH_PRIVATE_KEY_STAGING}}
-                envs: APP_STG_PORT_1, APP_STG_PORT_2, MINIO_STG_ENDPOINT,MINIO_STG_ACCESS_KEY, MINIO_STG_SECRET_KEY, APP_STG_PATH
+                envs: APP_STG_PORT_1, APP_STG_PORT_2, MINIO_STG_ENDPOINT,MINIO_STG_ACCESS_KEY, MINIO_STG_SECRET_KEY, APP_STG_PATH, GIT_URL
                 script: |
 
                     if [[ -d "${APP_STG_PATH}" ]]; then 
