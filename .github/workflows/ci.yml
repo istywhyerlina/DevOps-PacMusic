@@ -30,4 +30,5 @@ jobs:
           
       - name: Testing
         run: |
-          python3 testing/test.py
+          pip install -r test/requirements.txt
+          python3 test/test.py
